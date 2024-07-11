@@ -20,15 +20,7 @@ const provider = new GoogleAuthProvider();
 export const signInWithGoogle = (setLoading) => {
 	setLoading(true);
 	signInWithPopup(auth, provider)
-		.then((result) => {
-			setLoading(false);
-			sessionStorage.setItem("uid", result.user.uid);
-			getUserByUID(result.user.uid).then((userById) => {
-				if (userById === null || userById === {})
-					addUser(result.user, sessionStorage.getItem("token"));
-				else updateToken(sessionStorage.getItem("token"), result.user);
-			});
-		})
+		.then((result) => {})
 		.catch((error) => {
 			setLoading(false);
 			console.log(error);
