@@ -1,4 +1,3 @@
-import React from "react";
 import "./navbar.css";
 import adiliLogo from "../assets/Logo.png";
 const Navbar = () => {

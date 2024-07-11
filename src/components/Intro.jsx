@@ -1,5 +1,5 @@
-import React from "react";
 import "./intro.css"; // Pastikan Anda membuat file CSS ini juga
+import { Link } from "react-router-dom";
 
 const Intro = ({ onLogin }) => {
 	const handleGoogleSignIn = () => {
@@ -11,9 +11,11 @@ const Intro = ({ onLogin }) => {
 		<div className="landing-page">
 			<img id="intro-bg" src="./Image/Adili.png" alt="bg" />
 			<div className="signin">
-				<button onClick={handleGoogleSignIn} className="google-sign-in-btn">
-					Sign in with Google
-				</button>
+				<Link to="/home-page">
+					<button onClick={handleGoogleSignIn} className="google-sign-in-btn">
+						Sign in with Google
+					</button>
+				</Link>
 			</div>
 		</div>
 	);
