@@ -17,11 +17,15 @@ function App() {
 			<Navbar />
 			<div className="content">
 				<Routes>
-					<Route path="/" element={<Intro />} />
+					<Route
+						path="/"
+						element={
+							!isLoggedIn ? <Intro onLogin={handleLogin} /> : <GMapView />
+						}
+					/>
 					<Route path="home-page" element={<GMapView />} />
 				</Routes>
 			</div>
-			<div>{!isLoggedIn ? <Intro onLogin={handleLogin} /> : <GMapView />}</div>
 		</Router>
 	);
 }

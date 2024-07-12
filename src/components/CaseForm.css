@@ -1,7 +1,5 @@
-.case-form-container {
-	display: flex;
-	justify-content: center;
-	border-radius: 20px;
+#root {
+	overflow: auto;
 }
 
 .case-form button {
@@ -14,6 +12,8 @@
 }
 
 .case-form {
+	position: absolute;
+	overflow: auto;
 	border-radius: 10px;
 	width: clamp(400px, 25vw, 600px);
 	padding: 25px 60px;
@@ -25,6 +25,8 @@
 	background-color: white;
 	align-items: center;
 	color: black;
+	z-index: 999999;
+	top: 0;
 }
 
 .case-form h1 {

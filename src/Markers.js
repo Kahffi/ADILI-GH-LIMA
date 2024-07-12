@@ -1,6 +1,7 @@
 import { Icon } from "leaflet";
 
 export function createUserIcon(userImage) {
+	userImage;
 	return new Icon({
 		iconUrl: userImage,
 		iconSize: [35, 35], // size of the icon

@@ -9,6 +9,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import FloatButton from "../FloatButton";
+import { CaseForm } from "../CaseForm"; // Import CaseForm
 import icon1 from "../../assets/seru.png";
 import icon2 from "../../assets/hukum.png";
 import icon3 from "../../assets/psi.png";
@@ -30,10 +31,12 @@ function FlyToPosition() {
 	);
 }
 
-function CreateMarker({ setMarkers }) {
+function CreateMarker({ setFormPosition, setShowForm }) {
 	useMapEvents({
 		dblclick: (e) => {
-			setMarkers((prevMarkers) => [...prevMarkers, e.latlng]);
+			console.log("Halos");
+			setFormPosition(e.latlng);
+			setShowForm(true);
 		},
 	});
 
@@ -43,14 +46,23 @@ function CreateMarker({ setMarkers }) {
 const GMapView = () => {
 	const mapTilerApiKey = "KCwVKzPssuOk5YIeApg0"; // Ganti dengan API key Anda dari MapTiler
 	const [markers, setMarkers] = useState([]);
+	const [showForm, setShowForm] = useState(false);
+	const [formPosition, setFormPosition] = useState(null);
 
 	const bounds = [
 		[6.274449, 95.217575], // Barat Laut
 		[-11.00832, 141.019444], // Tenggara
 	];
 
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		setMarkers((prevMarkers) => [...prevMarkers, formPosition]);
+		setShowForm(false);
+		setFormPosition(null);
+	};
+
 	return (
-		<div>
+		<div style={{ position: "relative" }}>
 			<MapContainer
 				id="map"
 				center={[-6.175392, 106.827153]}
@@ -64,13 +76,17 @@ const GMapView = () => {
 					attribution='&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a>'
 				/>
 				<FlyToPosition />
-				<CreateMarker setMarkers={setMarkers} />
+				<CreateMarker
+					setFormPosition={setFormPosition}
+					setShowForm={setShowForm}
+				/>
 				{markers.map((location, index) => (
 					<Marker key={index} position={location}>
 						<Popup>Marker {index + 1}</Popup>
 					</Marker>
 				))}
 			</MapContainer>
+			{showForm && <CaseForm onSubmit={handleFormSubmit} />}
 			<div className="float-button float-button-1">
 				<FloatButton
 					icon={icon1}
