@@ -13,11 +13,11 @@ const Navbar = () => {
 				{routePath === "/" ? null : (
 					<div className="user-profile">
 						<img
-							src={auth.currentUser.photoURL}
+							src={auth?.currentUser?.photoURL}
 							alt="user-profile"
 							style={{ borderRadius: "100%", width: "35px", height: "35px" }}
 						/>
-						<h6>{auth?.currentUser.displayName}</h6>
+						<h6>{auth?.currentUser?.displayName}</h6>
 					</div>
 				)}
 			</div>
