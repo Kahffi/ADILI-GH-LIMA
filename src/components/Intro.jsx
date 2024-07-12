@@ -1,4 +1,4 @@
-import "./intro.css"; 
+import "./intro.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, signInWithGoogle } from "../firebase/firebase";
@@ -6,26 +6,26 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const Intro = ({ onLogin }) => {
 	const [user, setUser] = useState(null);
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 			setUser(currentUser);
 			if (currentUser) {
-				onLogin(); 
-				navigate("/home-page"); 
+				onLogin();
+				navigate("/home-page");
 			}
 		});
 		return () => {
 			unsubscribe();
 		};
-	}, [navigate, onLogin]); 
+	}, [navigate, onLogin]);
 
 	const handleGoogleSignIn = async () => {
 		try {
 			await signInWithGoogle();
-			onLogin(); 
-			navigate("/home-page"); 
+			onLogin();
+			navigate("/home-page");
 		} catch (error) {
 			console.error("Google Sign In Error:", error);
 		}
