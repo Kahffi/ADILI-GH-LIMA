@@ -13,10 +13,26 @@ import { CaseForm } from "../CaseForm"; // Import CaseForm
 import icon1 from "../../assets/seru.png";
 import icon2 from "../../assets/hukum.png";
 import icon3 from "../../assets/psi.png";
+import { auth } from "../../firebase/firebase";
+import L from "leaflet";
 
 function FlyToPosition() {
 	const map = useMap();
 	const [position, setPosition] = useState(null);
+	const [icon, setIcon] = useState(null);
+
+	useEffect(() => {
+		// Tunggu hingga auth.currentUser tersedia
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			if (user && user.photoURL) {
+				setIcon(createIcon(user.photoURL));
+			}
+		});
+
+		// Bersihkan langganan saat komponen unmount
+		return () => unsubscribe();
+	}, []);
+
 	useEffect(() => {
 		map.locate().on("locationfound", (e) => {
 			setPosition(e.latlng);
@@ -24,11 +40,20 @@ function FlyToPosition() {
 		});
 	}, [map]);
 
-	return position === null ? null : (
-		<Marker position={position}>
+	return position === null || icon === null ? null : (
+		<Marker position={position} icon={icon}>
 			<Popup>Halo</Popup>
 		</Marker>
 	);
+}
+
+function createIcon(url) {
+	return new L.Icon({
+		iconUrl: url,
+		iconSize: [30, 30],
+		iconAnchor: [15, 30], // Center the icon correctly
+		popupAnchor: [0, -30], // Adjust the popup position
+	});
 }
 
 function CreateMarker({ setFormPosition, setShowForm }) {
