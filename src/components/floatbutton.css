@@ -1,0 +1,53 @@
+/* FloatButton.css */
+.float-button {
+	position: absolute;
+	bottom: 20px;
+	right: clamp(50px, 3vw, 150px);
+	z-index: 1000; /* Mengatur lapisan tertinggi untuk float button */
+}
+
+.float-btn {
+	width: 110px; /* Sesuaikan dengan ukuran ikon */
+	height: 110px; /* Sesuaikan dengan ukuran ikon */
+	background-color: transparent; /* Membuat tombol transparan */
+	border: none; /* Menghilangkan border tombol */
+	padding: 0; /* Menghilangkan padding */
+	cursor: pointer;
+}
+
+.close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 24px;
+	cursor: pointer;
+	color: #aaa;
+}
+
+.button-icon {
+	/* Ukuran ikon */
+	height: 110px;
+	/* Ukuran ikon */
+}
+.float-button-1:hover {
+	filter: drop-shadow(0 0 2em #bd0000);
+}
+.float-button-1 {
+	right: 1200px;
+	bottom: 400px;
+	/* Posisi tombol pertama */
+}
+.float-button-2:hover {
+	filter: drop-shadow(0 0 2em #d4a411);
+}
+.float-button-2 {
+	bottom: 100px;
+	right: 20px; /* Posisi tombol kedua */
+}
+.float-button-3:hover {
+	filter: drop-shadow(0 0 2em #7d1494);
+}
+.float-button-3 {
+	bottom: 400px;
+	right: 20px; /* Posisi tombol ketiga */
+}

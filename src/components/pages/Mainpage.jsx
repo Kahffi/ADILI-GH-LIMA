@@ -8,10 +8,12 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-let currentPosition = null;
+import FloatButton from "../FloatButton";
+import icon1 from "../../assets/seru.png";
+import icon2 from "../../assets/hukum.png";
+import icon3 from "../../assets/psi.png";
 
 function FlyToPosition() {
-	console.log("Running");
 	const map = useMap();
 	const [position, setPosition] = useState(null);
 	useEffect(() => {
@@ -28,29 +30,69 @@ function FlyToPosition() {
 	);
 }
 
+function CreateMarker({ setMarkers }) {
+	useMapEvents({
+		dblclick: (e) => {
+			setMarkers((prevMarkers) => [...prevMarkers, e.latlng]);
+		},
+	});
+
+	return null;
+}
+
 const GMapView = () => {
 	const mapTilerApiKey = "KCwVKzPssuOk5YIeApg0"; // Ganti dengan API key Anda dari MapTiler
+	const [markers, setMarkers] = useState([]);
+
 	const bounds = [
 		[6.274449, 95.217575], // Barat Laut
 		[-11.00832, 141.019444], // Tenggara
 	];
 
 	return (
-		<MapContainer
-			id="map"
-			center={[-6.175392, 106.827153]}
-			zoom={13}
-			style={{ height: "88.5vh", width: "100%" }}
-			maxBounds={bounds}
-			maxBoundsViscosity={0.5}
-		>
-			<TileLayer
-				url={`https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${mapTilerApiKey}`}
-				attribution='&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a>'
-			/>
-			<FlyToPosition />
-			<div>HALO SEMUANYA</div>
-		</MapContainer>
+		<div>
+			<MapContainer
+				id="map"
+				center={[-6.175392, 106.827153]}
+				zoom={13}
+				style={{ height: "88.5vh", width: "100%" }}
+				maxBounds={bounds}
+				maxBoundsViscosity={0.5}
+			>
+				<TileLayer
+					url={`https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${mapTilerApiKey}`}
+					attribution='&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a>'
+				/>
+				<FlyToPosition />
+				<CreateMarker setMarkers={setMarkers} />
+				{markers.map((location, index) => (
+					<Marker key={index} position={location}>
+						<Popup>Marker {index + 1}</Popup>
+					</Marker>
+				))}
+			</MapContainer>
+			<div className="float-button float-button-1">
+				<FloatButton
+					icon={icon1}
+					popupContent="Content for Button 1"
+					popupType="popup1"
+				/>
+			</div>
+			<div className="float-button float-button-2">
+				<FloatButton
+					icon={icon2}
+					popupContent="Content for Button 2"
+					popupType="popup3"
+				/>
+			</div>
+			<div className="float-button float-button-3">
+				<FloatButton
+					icon={icon3}
+					popupContent="Content for Button 3"
+					popupType="popup2"
+				/>
+			</div>
+		</div>
 	);
 };
 
